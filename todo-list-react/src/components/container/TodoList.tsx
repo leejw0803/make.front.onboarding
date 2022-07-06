@@ -1,41 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Todos from "../../todos/Todos";
+import { setStorageItem } from "../../utils/windowLocalStorage";
+import { getStorageItem } from "../../utils/windowLocalStorage";
 
 const Container = styled.div`
-  width: 300px;
-  height: 600px;
+  width: 425px;
+  height: 796px;
+  background: #eeeeee;
   border: 1px solid limegreen;
 `;
 
 export type TodoProps = {
+  id: number;
   content: string;
 };
 
-let todo: TodoProps;
+export type SetTodosProps = {
+  setTodos: () => void;
+};
 
 function TodoList() {
-  let [todos, setTodos] = useState([
-    { content: "온보딩 과제하기" },
-    { content: "끝내주는 저녁 먹기" },
-  ] as any);
-  console.log(todos);
-
+  let [todos, setTodos] = useState([] as any);
   let [text, setText] = useState<string>("");
 
-  const onChange = (e: any) => {
-    setText((e.target as HTMLInputElement).value);
-    // console.log(e.target.value);
+  // useEffect(() => {
+  // const getData = getStorageItem("content");
+  // setTodos(getData);
+  // console.log(todos);
+  // }, todos);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
   };
 
-  const addTodo = (e) => {
-    let newTodos = [...todos, { content: text }];
+  const addTodo = (e: React.MouseEvent<HTMLElement>) => {
+    let newTodos = [...todos, { id: todos.length, content: text }];
     setTodos(newTodos);
+    // }
+    console.dir(newTodos);
+
+    setStorageItem("content", newTodos);
   };
 
   return (
     <Container className="todo-list">
-      <h2>TodoList</h2>
+      <h2>
+        TodoList (<span>{todos.length}</span>)
+      </h2>
       <input
         type="text"
         onChange={onChange}
@@ -43,8 +55,8 @@ function TodoList() {
         value={text}
         placeholder="오늘의 할 일은?"
       />
-      <button onClick={addTodo}>ADD</button>
-      <Todos todos={todos} />
+      <button onClick={addTodo}>+</button>
+      <Todos todos={todos} setTodos={setTodos} />
     </Container>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import TodoList from "./components/container/TodoList";
 import Header from "./components/header/Header";
+import TodoList from "./components/container/TodoList";
 
 function App() {
   return (
