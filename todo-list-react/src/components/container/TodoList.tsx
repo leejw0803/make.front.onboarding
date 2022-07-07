@@ -43,6 +43,14 @@ function TodoList() {
     setStorageItem("content", newTodos);
   };
 
+  const removeTodo = (id: any) => {
+    const result = todos.filter((todo) => {
+      return todo.id !== id;
+    });
+
+    setTodos(result);
+  };
+
   return (
     <Container className="todo-list">
       <h2>
@@ -56,7 +64,7 @@ function TodoList() {
         placeholder="오늘의 할 일은?"
       />
       <button onClick={addTodo}>+</button>
-      <Todos todos={todos} setTodos={setTodos} />
+      <Todos todos={todos} removeTodo={removeTodo} />
     </Container>
   );
 }
