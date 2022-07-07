@@ -3,12 +3,7 @@ import Header from "./components/header/Header";
 import TodoList from "./components/container/TodoList";
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <TodoList />
-    </div>
-  );
+  return <TodoList />;
 }
 
 export default App;

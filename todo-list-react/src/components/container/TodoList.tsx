@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Todos from "../../todos/Todos";
-import { setStorageItem } from "../../utils/windowLocalStorage";
+import {
+  removeStorageItem,
+  setStorageItem,
+} from "../../utils/windowLocalStorage";
 import { getStorageItem } from "../../utils/windowLocalStorage";
 
 const Container = styled.div`
@@ -12,8 +15,13 @@ const Container = styled.div`
 `;
 
 export type TodoProps = {
-  id: number;
+  index: number;
   content: string;
+};
+
+export type TodoItemProps = {
+  todos: TodoProps[];
+  index: TodoProps[];
 };
 
 export type SetTodosProps = {
@@ -21,7 +29,7 @@ export type SetTodosProps = {
 };
 
 function TodoList() {
-  let [todos, setTodos] = useState([] as any);
+  let [todos, setTodos] = useState<TodoProps[]>();
   let [text, setText] = useState<string>("");
 
   // useEffect(() => {
@@ -34,27 +42,31 @@ function TodoList() {
     setText(e.target.value);
   };
 
-  const addTodo = (e: React.MouseEvent<HTMLElement>) => {
-    let newTodos = [...todos, { id: todos.length, content: text }];
-    setTodos(newTodos);
-    // }
-    console.dir(newTodos);
+  // const addTodo = (e: React.MouseEvent<HTMLElement>) => {
+  //   if (!todos) return;
+  //   let newTodos = [...todos, { id: text., content: text }];
+  //   setTodos(newTodos);
 
-    setStorageItem("content", newTodos);
-  };
+  //   setStorageItem("content", newTodos);
+  // };
+  const addTodo = () => {
+    console.log(todos);
+    if (todos === undefined) setTodos([{ index: 0, content: text }]);
+    else {
+      console.log(todos.length);
 
-  const removeTodo = (id: any) => {
-    const result = todos.filter((todo) => {
-      return todo.id !== id;
-    });
+      setTodos([...todos, { index: todos.length, content: text }]);
+    }
 
-    setTodos(result);
+    // setTodos([...todos, { index: todos.length, content: text }]);
+
+    setStorageItem("content", { index: todos.length, content: text });
   };
 
   return (
     <Container className="todo-list">
       <h2>
-        TodoList (<span>{todos.length}</span>)
+        TodoList (<span></span>)
       </h2>
       <input
         type="text"
@@ -64,7 +76,8 @@ function TodoList() {
         placeholder="오늘의 할 일은?"
       />
       <button onClick={addTodo}>+</button>
-      <Todos todos={todos} removeTodo={removeTodo} />
+
+      <Todos todos={todos} setTodos={setTodos} />
     </Container>
   );
 }
