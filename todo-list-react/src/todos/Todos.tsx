@@ -5,6 +5,7 @@ import type {
   SetTodosProps,
   TodoProps,
 } from "../components/container/TodoList.type";
+import { dir } from "console";
 
 type TodosProps = {
   todos: TodoProps[];
@@ -27,7 +28,6 @@ function Todos({ todos, setTodos }: TodosProps) {
       {todos &&
         todos.map((todo, i) => {
           const id: number = i;
-          console.log(i);
 
           return (
             <TodoItem
@@ -36,8 +36,6 @@ function Todos({ todos, setTodos }: TodosProps) {
               todos={todos}
               todo={todo}
               setTodos={setTodos}
-              // submitTodo={submitTodo}
-              // removeTodo={removeTodo(i)}
             ></TodoItem>
           );
         })}

@@ -18,22 +18,20 @@ const Container = styled.div`
 const initialValue = { id: 0, content: "할 일을 등록하세요" };
 
 function TodoList() {
-  let [holder, setHolder] = useState(initialValue);
-  let [holderVisible, setHolderVisible] = useState(false);
+  // let [holder, setHolder] = useState(initialValue);
+  // let [holderVisible, setHolderVisible] = useState(false);
   let [todos, setTodos] = useState<TodoProps[]>();
   let [text, setText] = useState<string>("");
 
   // 처음 렌더링시
   useEffect(() => {
     // setHolderVisible(true);
-    console.log(holder);
-
+    // console.log(holder);
     // setStorageItem("");
   });
 
   useEffect(() => {
-    // const getData = getStorageItem("todos");
-    // setTodos(getData);
+    // setTodos(getStorageItem("content"));
     // console.log(todos);
   }, todos);
 

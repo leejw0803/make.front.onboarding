@@ -1,3 +1,4 @@
+import { dir } from "console";
 import React, { useState, useEffect, useRef } from "react";
 import { removeStorageItem } from "../../utils/windowLocalStorage";
 import { TodoProps } from "../container/TodoList.type";
@@ -8,40 +9,48 @@ function TodoItem({ id, todos, todo, setTodos }) {
     todos?.content ? todos.content : ""
   );
 
+  // ----- 수정
   const editInputRef = useRef(null);
 
   useEffect(() => {
     if (edit) {
-      // editInputRef.current.focus();
+      editInputRef.current.focus();
     }
   }, [edit]);
-
-  const handleRemoveTodo = (index) => {
-    const result = todos.filter((todo) => {
-      return todo.index !== id;
-    });
-
-    setTodos(result);
-    removeStorageItem("todo");
-  };
 
   const handleEditTodo = () => {
     setEditTodo(true);
   };
 
-  const handlNewInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewText(e.target.value);
-  };
+  const handleSubmitButton = () => {
+    console.log(todo.index);
+    console.log(id);
 
-  const handleSubmitButton = (id) => {
     const newTodos = todos.map((todo) => ({
-      ...todos,
-      content: todo.index === id ? todo.content : newText,
+      ...todo,
+      content: todo.index === id ? newText : todo.content,
     }));
 
     setTodos(newTodos);
     setEditTodo(false);
   };
+
+  // ----- 삭제
+  const handleRemoveTodo = (id) => {
+    const result = todos.filter((todo) => {
+      return todo.index !== id;
+    });
+
+    setTodos(result);
+    // removeStorageItem("todo");
+  };
+
+  const handleNewInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+
+    setNewText(e.target.value);
+  };
+
   return (
     <div>
       {edit ? (
@@ -49,7 +58,7 @@ function TodoItem({ id, todos, todo, setTodos }) {
           <input
             type="text"
             value={newText}
-            onChange={handlNewInputChange}
+            onChange={handleNewInputChange}
             ref={editInputRef}
           />
           <button onClick={handleSubmitButton}>완료</button>
