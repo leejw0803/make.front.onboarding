@@ -1,9 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { SetTodosProps, TodoProps } from "../components/container/TodoList";
-import { removeStorageItem } from "../utils/windowLocalStorage";
-import { getStorageItem } from "../utils/windowLocalStorage";
 import TodoItem from "../components/todoItem/TodoItem";
+import type {
+  SetTodosProps,
+  TodoProps,
+} from "../components/container/TodoList.type";
+
+type TodosProps = {
+  todos: TodoProps[];
+  // index: TodoProps[];
+  setTodos: React.Dispatch<React.SetStateAction<TodoProps[]>>;
+};
 
 const TodoListItems = styled.div`
   margin: 0 auto;
@@ -13,40 +20,8 @@ const TodoListItems = styled.div`
   border: 1px solid #edf0f3;
 `;
 
-function Todos({ todos, setTodos }) {
-  const [update, setUpdate] = useState(false);
-  const [newText, setNewText] = useState<string>(
-    todos?.content ? todos.content : ""
-  );
-
-  const updateInputRef = useRef(null);
-
-  useEffect(() => {
-    console.log(update);
-
-    if (update) {
-      // updateInputRef.current.focus();
-    }
-  }, [update]);
-
-  const updateTodo = (id: void) => {
-    console.log(id);
-
-    if (todos.id === id) {
-      setUpdate(true);
-    } else {
-      return;
-    }
-  };
-
-  const submitTodo = () => {
-    // setTodos(newText);
-  };
-
-  const updateInput = (e) => {
-    setNewText(e.target.value);
-  };
-
+function Todos({ todos, setTodos }: TodosProps) {
+  // [] if(todos) -> true
   return (
     <TodoListItems>
       {todos &&
@@ -61,11 +36,6 @@ function Todos({ todos, setTodos }) {
               todos={todos}
               todo={todo}
               setTodos={setTodos}
-              updateInputRef={updateInputRef}
-              update={update}
-              updateInput={updateInput}
-              newText={newText}
-              updateTodo={updateTodo}
               // submitTodo={submitTodo}
               // removeTodo={removeTodo(i)}
             ></TodoItem>
