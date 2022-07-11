@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import TodoItem from "../components/todoItem/TodoItem";
-import { TodoProps } from "../components/container/TodoList.type";
-import { dir } from "console";
+import TodoItem from "../todoItem/TodoItem";
+import { TodoProps } from "../container/TodoList.type";
 
 type TodosProps = {
   todos: TodoProps[];

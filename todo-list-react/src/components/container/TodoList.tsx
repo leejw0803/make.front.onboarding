@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import Todos from "../../todos/Todos";
+import Todos from "../todos/Todos";
 import {
   removeStorageItem,
   setStorageItem,
