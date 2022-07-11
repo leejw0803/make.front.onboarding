@@ -1,9 +1,12 @@
 import { dir } from "console";
 import React, { useState, useEffect, useRef } from "react";
-import { removeStorageItem } from "../../utils/windowLocalStorage";
+import {
+  removeStorageItem,
+  setStorageItem,
+} from "../../utils/windowLocalStorage";
 import { TodoProps } from "../container/TodoList.type";
 
-function TodoItem({ id, todos, todo, setTodos }) {
+function TodoItem({ id, todos, todo, setTodos, holder }) {
   const [edit, setEditTodo] = useState(false);
   const [newText, setNewText] = useState<string>(
     todos?.content ? todos.content : ""
@@ -22,7 +25,7 @@ function TodoItem({ id, todos, todo, setTodos }) {
     setEditTodo(true);
   };
 
-  const handleSubmitButton = () => {
+  const handleUpdateButton = () => {
     console.log(todo.index);
     console.log(id);
 
@@ -32,6 +35,7 @@ function TodoItem({ id, todos, todo, setTodos }) {
     }));
 
     setTodos(newTodos);
+    setStorageItem("content", newTodos);
     setEditTodo(false);
   };
 
@@ -42,12 +46,11 @@ function TodoItem({ id, todos, todo, setTodos }) {
     });
 
     setTodos(result);
-    // removeStorageItem("todo");
+    removeStorageItem("content");
+    setStorageItem("content", result);
   };
 
   const handleNewInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-
     setNewText(e.target.value);
   };
 
@@ -61,7 +64,7 @@ function TodoItem({ id, todos, todo, setTodos }) {
             onChange={handleNewInputChange}
             ref={editInputRef}
           />
-          <button onClick={handleSubmitButton}>완료</button>
+          <button onClick={handleUpdateButton}>완료</button>
         </>
       ) : (
         <div>

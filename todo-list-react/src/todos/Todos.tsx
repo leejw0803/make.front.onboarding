@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import TodoItem from "../components/todoItem/TodoItem";
-import type {
-  SetTodosProps,
-  TodoProps,
-} from "../components/container/TodoList.type";
+import { TodoProps } from "../components/container/TodoList.type";
 import { dir } from "console";
 
 type TodosProps = {
   todos: TodoProps[];
   // index: TodoProps[];
   setTodos: React.Dispatch<React.SetStateAction<TodoProps[]>>;
+  holder: TodoProps[];
 };
 
 const TodoListItems = styled.div`
@@ -21,7 +19,7 @@ const TodoListItems = styled.div`
   border: 1px solid #edf0f3;
 `;
 
-function Todos({ todos, setTodos }: TodosProps) {
+function Todos({ todos, setTodos, holder }: TodosProps) {
   // [] if(todos) -> true
   return (
     <TodoListItems>
@@ -31,6 +29,7 @@ function Todos({ todos, setTodos }: TodosProps) {
 
           return (
             <TodoItem
+              holder={holder}
               key={i}
               id={id}
               todos={todos}

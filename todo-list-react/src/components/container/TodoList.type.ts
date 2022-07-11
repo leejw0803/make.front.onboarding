@@ -5,7 +5,8 @@ export type TodoProps = {
 
 export type TodoItemProps = {
   todos: TodoProps[];
-  // index: TodoProps[];
+  holder: TodoProps[];
+  index: TodoProps[];
 };
 
 export type SetTodosProps = {

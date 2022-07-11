@@ -3,8 +3,8 @@ export const setStorageItem = (key: string, value: object) => {
 };
 
 export const getStorageItem = (key: string) => {
-  let data = JSON.parse(localStorage.getItem(key) as string);
-  return data;
+  const getData = JSON.parse(localStorage.getItem(key) as string);
+  return getData;
 };
 
 export const removeStorageItem = (key: string) => {
