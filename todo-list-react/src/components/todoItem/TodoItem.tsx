@@ -6,7 +6,7 @@ import {
 } from "../../utils/windowLocalStorage";
 import { TodoProps } from "../container/TodoList.type";
 
-function TodoItem({ id, todos, todo, setTodos, holder }) {
+function TodoItem({ id, todos, todo, setTodos }) {
   const [edit, setEditTodo] = useState(false);
   const [newText, setNewText] = useState<string>(
     todos?.content ? todos.content : ""

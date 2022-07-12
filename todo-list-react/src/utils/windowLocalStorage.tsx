@@ -1,12 +1,26 @@
-export const setStorageItem = (key: string, value: object) => {
-  localStorage.setItem(key, JSON.stringify(value));
-};
+import { TodoProps } from "../components/container/TodoList.type";
 
-export const getStorageItem = (key: string) => {
-  const getData = JSON.parse(localStorage.getItem(key) as string);
-  return getData;
-};
+export async function setStorageItem<T>(key: string, value: object) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    await console.log("error");
+  }
+}
 
-export const removeStorageItem = (key: string) => {
-  localStorage.removeItem(key);
-};
+export async function getStorageItem<T>(key: string): Promise<TodoProps[]> {
+  try {
+    const data = localStorage.getItem(key) as string;
+    return JSON.parse(data);
+  } catch (error) {
+    await console.log("error");
+  }
+}
+
+export async function removeStorageItem(key: string) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    await console.error("error");
+  }
+}

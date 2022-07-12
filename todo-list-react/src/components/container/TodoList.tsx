@@ -1,10 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Todos from "../todos/Todos";
-import {
-  removeStorageItem,
-  setStorageItem,
-} from "../../utils/windowLocalStorage";
+import { setStorageItem } from "../../utils/windowLocalStorage";
 import { getStorageItem } from "../../utils/windowLocalStorage";
 import type { TodoProps } from "./TodoList.type";
 
@@ -16,24 +13,17 @@ const Container = styled.div`
 `;
 
 function TodoList() {
-  let [holder, setHolder] = useState<TodoProps[]>();
-  let [holderVisible, setHolderVisible] = useState(false);
   let [todos, setTodos] = useState<TodoProps[]>();
   let [text, setText] = useState<string>("");
 
-  // 처음 렌더링시
+  // todo 불러오기
+  // useEffect에서 async-await 사용하기
   useEffect(() => {
-    const initialValue = [{ index: 0, content: "할 일을 등록하세요" }];
-    // setHolderVisible(true);
-    // setHolder(initialValue);
-    // console.log(holder);
-    // setStorageItem("");
-  }, holder);
-
-  useEffect(() => {
-    const localTodoList = getStorageItem("content");
-    console.log(localTodoList);
-    return setTodos(localTodoList);
+    async function testSetTodos() {
+      const localTodoList = await getStorageItem("content");
+      return setTodos(localTodoList);
+    }
+    testSetTodos();
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,12 +47,14 @@ function TodoList() {
   // };
 
   const handleAddTodo = () => {
-    if (text.length <= 0) return;
-    else {
-      setTodos([{ index: 0, content: text }]);
-      setTodos([...todos, { index: todos.length, content: text }]);
-      setStorageItem("content", todos);
-    }
+    return new Promise(function (resolve) {
+      if (text.length <= 0) return;
+      else {
+        setTodos([{ index: 0, content: text }]);
+        setTodos([...todos, { index: todos.length, content: text }]);
+        setStorageItem("content", todos);
+      }
+    });
   };
 
   return (
@@ -79,7 +71,7 @@ function TodoList() {
       />
       <button onClick={handleAddTodo}>+</button>
 
-      <Todos todos={todos} setTodos={setTodos} holder={holder} />
+      <Todos todos={todos} setTodos={setTodos} />
     </Container>
   );
 }

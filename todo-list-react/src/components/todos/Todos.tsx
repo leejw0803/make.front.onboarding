@@ -7,7 +7,6 @@ type TodosProps = {
   todos: TodoProps[];
   // index: TodoProps[];
   setTodos: React.Dispatch<React.SetStateAction<TodoProps[]>>;
-  holder: TodoProps[];
 };
 
 const TodoListItems = styled.div`
@@ -18,7 +17,7 @@ const TodoListItems = styled.div`
   border: 1px solid #edf0f3;
 `;
 
-function Todos({ todos, setTodos, holder }: TodosProps) {
+function Todos({ todos, setTodos }: TodosProps) {
   // [] if(todos) -> true
   return (
     <TodoListItems>
@@ -28,7 +27,6 @@ function Todos({ todos, setTodos, holder }: TodosProps) {
 
           return (
             <TodoItem
-              holder={holder}
               key={i}
               id={id}
               todos={todos}
