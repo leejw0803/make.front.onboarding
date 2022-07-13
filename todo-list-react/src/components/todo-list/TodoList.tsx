@@ -1,6 +1,7 @@
+// CONTAINER(logic / stateful)
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Todos from "../todos/Todos";
+import TodosListPresenter from "./TodoList.presenter";
 import { setStorageItem } from "../../utils/windowLocalStorage";
 import { getStorageItem } from "../../utils/windowLocalStorage";
 import type { TodoProps } from "./TodoList.type";
@@ -12,7 +13,7 @@ const Container = styled.div`
   border: 1px solid limegreen;
 `;
 
-function TodoList() {
+function TodoList(): JSX.Element {
   let [todos, setTodos] = useState<TodoProps[]>();
   let [text, setText] = useState<string>("");
 
@@ -30,22 +31,6 @@ function TodoList() {
     setText(e.target.value);
   };
 
-  // const addTodo = (e: React.MouseEvent<HTMLElement>) => {
-  //   if (!todos) return; // 의미없어.
-  //   let newTodos = [...todos, { id: text., content: text }];
-  //   setTodos(newTodos);
-
-  //   setStorageItem("content", newTodos);
-  // };
-
-  // const handleAddTodo = () => {
-  //   if (todos === undefined) setTodos([{ index: 0, content: text }]);
-  //   else {
-  //     setTodos([...todos, { index: todos.length, content: text }]);
-  //     setStorageItem("content", { index: todos.length, content: text });
-  //   }
-  // };
-
   const handleAddTodo = () => {
     return new Promise(function (resolve) {
       if (text.length <= 0) return;
@@ -58,21 +43,14 @@ function TodoList() {
   };
 
   return (
-    <Container>
-      <h2>
-        TodoList (<span></span>)
-      </h2>
-      <input
-        type="text"
-        onChange={handleInputChange}
-        name="content"
-        value={text}
-        placeholder="오늘의 할 일은?"
-      />
-      <button onClick={handleAddTodo}>+</button>
-
-      <Todos todos={todos} setTodos={setTodos} />
-    </Container>
+    <TodosListPresenter
+      text={text}
+      setText={setText}
+      handleAddTodo={handleAddTodo}
+      handleInputChange={handleInputChange}
+      todos={todos}
+      setTodos={setTodos}
+    />
   );
 }
 

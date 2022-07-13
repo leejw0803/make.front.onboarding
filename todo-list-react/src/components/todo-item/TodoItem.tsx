@@ -4,7 +4,8 @@ import {
   removeStorageItem,
   setStorageItem,
 } from "../../utils/windowLocalStorage";
-import { TodoProps } from "../container/TodoList.type";
+import { TodoProps } from "../todo-list/TodoList.type";
+import TodoItemPresenter from "./TodoItem.presenter";
 
 function TodoItem({ id, todos, todo, setTodos }) {
   const [edit, setEditTodo] = useState(false);
@@ -56,23 +57,16 @@ function TodoItem({ id, todos, todo, setTodos }) {
 
   return (
     <div>
-      {edit ? (
-        <>
-          <input
-            type="text"
-            value={newText}
-            onChange={handleNewInputChange}
-            ref={editInputRef}
-          />
-          <button onClick={handleUpdateButton}>완료</button>
-        </>
-      ) : (
-        <div>
-          <span>{todo.content}</span>
-          <button onClick={() => handleEditTodo()}>수정</button>
-          <button onClick={() => handleRemoveTodo(todo.index)}>삭제</button>
-        </div>
-      )}
+      <TodoItemPresenter
+        edit={edit}
+        todo={todo}
+        handleEditTodo={handleEditTodo}
+        handleRemoveTodo={handleRemoveTodo}
+        handleNewInputChange={handleNewInputChange}
+        newText={newText}
+        handleUpdateButton={handleUpdateButton}
+        editInputRef={editInputRef}
+      />
     </div>
   );
 }

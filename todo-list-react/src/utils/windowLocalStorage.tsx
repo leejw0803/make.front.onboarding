@@ -1,4 +1,4 @@
-import { TodoProps } from "../components/container/TodoList.type";
+import { TodoProps } from "../components/todo-list/TodoList.type";
 
 export async function setStorageItem<T>(key: string, value: object) {
   try {
