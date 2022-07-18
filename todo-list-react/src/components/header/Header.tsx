@@ -1,16 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import HeaderPresenter from "./Header.presenter";
+import { UserInfoProps } from "../share/UserInfo/UserInfo.type";
 
-const StyledHeader = styled.div`
-  margin: 0;
-  border: 1px solid red;
-`;
-
-function Header() {
+function Header(): JSX.Element {
   return (
-    <StyledHeader>
-      <h1>Header</h1>
-    </StyledHeader>
+    <>
+      <HeaderPresenter />
+    </>
   );
 }
 

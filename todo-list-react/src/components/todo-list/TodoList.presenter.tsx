@@ -1,26 +1,12 @@
 // PRESENTER(Markup / stateless)
-import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import TodoItem from "../todo-item/TodoItem";
+import { TodoListStyle } from "./TodosList.style";
 import {
   TodosProps,
   TodoProps,
   TodosListPresenterTypes,
 } from "./TodoList.type";
-
-// type TodosProps = {
-//   todos: TodoProps[];
-//   // index: TodoProps[];
-//   setTodos: React.Dispatch<React.SetStateAction<TodoProps[]>>;
-// };
-
-const TodoListItemStyle = styled.div`
-  margin: 0 auto;
-  width: 388px;
-  height: 105px;
-  background: #ffffff;
-  border: 1px solid #edf0f3;
-`;
 
 function TodosListPresenter({
   todos,
@@ -32,10 +18,8 @@ function TodosListPresenter({
 }: TodosProps & TodosListPresenterTypes): // { }: TodosListPresenterTypes
 JSX.Element {
   return (
-    <TodoListItemStyle>
-      <h2>
-        TodoList (<span></span>)
-      </h2>
+    <TodoListStyle.Wrapper>
+      <TodoListStyle.Title>Todo ()</TodoListStyle.Title>
       <input
         type="text"
         onChange={handleInputChange}
@@ -43,7 +27,9 @@ JSX.Element {
         value={text}
         placeholder="오늘의 할 일은?"
       />
-      <button onClick={handleAddTodo}>+</button>
+      <TodoListStyle.AddButton onClick={handleAddTodo}>
+        <TodoListStyle.Plus />
+      </TodoListStyle.AddButton>
       {todos?.map((todo, i) => {
         const id: number = i;
         return (
@@ -56,7 +42,7 @@ JSX.Element {
           ></TodoItem>
         );
       })}
-    </TodoListItemStyle>
+    </TodoListStyle.Wrapper>
   );
 }
 

@@ -17,8 +17,6 @@ function TodoList(): JSX.Element {
   let [todos, setTodos] = useState<TodoProps[]>();
   let [text, setText] = useState<string>("");
 
-  // todo 불러오기
-  // useEffect에서 async-await 사용하기
   useEffect(() => {
     async function testSetTodos() {
       const localTodoList = await getStorageItem("content");
